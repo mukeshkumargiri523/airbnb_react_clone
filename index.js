@@ -4,7 +4,7 @@ const { default: mongoose } = require("mongoose");
 const User = require("./models/userModel");
 const Place = require("./models/placeModel");
 const Booking = require("./models/bookingModel.js");
-
+const path = require("path");
 //packages
 const express = require("express");
 const cors = require("cors");
@@ -19,15 +19,16 @@ const app = express();
 
 const secretSalt = 8;
 const jwtSecret = "delhi/mumbai/chennai";
-// app.use(
-//   cors({
-//     credentials: true,
-//     origin: "http://localhost:5173",
-//   })
-// );
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:5173",
+  })
+);
+// app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(path.resolve("./dist")));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 mongoose
   .connect(process.env.MONGO_URL, {
